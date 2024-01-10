@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <title>TikTok Date Extractor - UTC-6 (Zona Horaria México)</title>
+    <link rel="icon" href="css/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="css/favicon.ico" type="image/x-icon" />	
+    <style>
+      body {
+        margin: 1em;
+        font-family: "Helvetica", Arial, sans-serif;
+        font-size: 18px;
+      }
+      button, input {
+          font-size: 16px;
+      }
+      .form {
+          margin-bottom: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      function getVidId() {
+        const tiktokUrl= document.querySelector("#url").value;
+        // This regex should be safe as "Only letters, numbers, underscores, or periods are allowed" in TikTok usernames.
+        const regex = /(?<=\/video\/)(.*?)(?=$|[^0-9])/;
+        const vidId = regex.exec(tiktokUrl)[0];
+        return vidId;
+      }
+
+      function extractUnixTimestamp(vidId) {
+        // BigInt needed as we need to treat vidId as 64 bit decimal. This reduces browser support.
+        const asBinary = BigInt(vidId).toString(2);
+        const first31Chars = asBinary.slice(0, 31);
+        const timestamp = parseInt(first31Chars, 2);
+        return timestamp;
+      }
+
+      function unixTimestampToHumanDate(timestamp) {
+        var milliseconds = timestamp * 1000;
+        milliseconds = milliseconds - (3600000 * 6);
+
+        const dateObject = new Date(milliseconds);
+        const humanDateFormat = dateObject.toUTCString()+" (UTC-6 Zona horaria en México)";
+        return humanDateFormat;
+      }
+
+      function getDate() {
+        const vidId = getVidId();
+        const unixTimestamp = extractUnixTimestamp(vidId);
+        const humanDateFormat = unixTimestampToHumanDate(unixTimestamp);
+        document.querySelector("#date").textContent = humanDateFormat;
+      }
+    </script>
+	<img src="images/portada.jpg" width="685" height="220"/><br>    
+	  
+    <h2> Extractor de Fecha de Origen de videos TikTok (México) </h2>
+	 <br>
+    <div class="form">
+      <label for="url">TikTok video URL:</label>
+      <input type="text" id="url" name="url" />
+      <button onclick="getDate()">Obtener fecha</button>
+    </div>
+    <div class="output">
+      <span id="label">Video subido el: </span>
+      <span id="date"></span>
+    </div>
+    <br><h4> Créditos: </h4>
+    <a href="https://github.com/bellingcat" target="_blank">Bellingcat</a> <br>
+      <a href="https://github.com/karisti" target="_blank">Kepa Aristi</a>
+	  
+	<br><h4> Sígueme: </h4>
+    <a href="https://twitter.com/ManuelBot59" target="_blank">Twitter</a> <br>
+	  
+  </body>
+</html>
