@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>TikTok Date Extractor - UTC-6 (Zona Horaria México)</title>
+    <title>TikTok Date Extractor GMT-6 (Zona Horaria México)</title>
     <link rel="icon" href="css/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="css/favicon.ico" type="image/x-icon" />	
     <style>
@@ -40,7 +40,7 @@
         milliseconds = milliseconds - (3600000 * 6);
 
         const dateObject = new Date(milliseconds);
-        const humanDateFormat = dateObject.toUTCString()+" (UTC-6 Zona horaria en México)";
+        const humanDateFormat = dateObject.toUTCString()+" (GMT-6 Zona horaria en México)";
         return humanDateFormat;
       }
 
@@ -53,7 +53,7 @@
     </script>
 	<img src="images/Timestamp-Mexico.png" width="685" height="285"/><br>    
 	  
-      <h2> Fecha de creación de videos de TikTok</h2>
+      <h2> Fecha de creación de videos de Tik Tok</h2>
       <h2>     (Zona Horaria de México GMT-6) </h2>
     
    <br>
@@ -70,7 +70,7 @@
       <button onclick="getDate()">Obtener fecha</button>
     </div>
     <div class="output">
-      <span id="label">Subido el: </span>
+      <span id="label">Publicado el: </span>
       <span id="date"></span>
     </div>
 <br> <br>
